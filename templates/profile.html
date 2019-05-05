@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<title>Twitter</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+
+.registerbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 10%
+  opacity: 0.9;
+  border-radius: 25px;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+.hide{
+  display:none;
+}
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius:15px;
+    border-color:#4CAF50;
+}
+/* Set a style for all buttons */
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+.navbarT {
+width: 100%;
+background-color:#FF3333;
+overflow: auto;
+}
+
+.navbarT a {
+float: left;
+padding: 12px;
+color: white;
+text-decoration: none;
+font-size: 17px;
+}
+
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #474e5d;
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+<body class="w3-light-grey">
+
+  <div class="navbarT">
+      <a  href="/profile"><i class="fa fa-fw fa-home"></i>Home</a>
+      <form style="height:5px;" action="/profile" method="post">
+      <input type="text" name="userSearch" placeholder="Search by username"style="width:15%;height:2px;margin:15px;padding:12px;border-radius:5px">
+      <button type="submit" name=button value="searchUser" style="border:none;background: none;padding:none"><i class="fa fa-fw fa-search" style="border-radius:3px;color:#FFE5E6"></i></button>
+      <input type="text" name="tweetSearch" placeholder="Search in tweets"style="width:15%;height:2px;margin:15px;padding:12px;border-radius:5px">
+        <button type="submit" name=button value="searchTweet" style="border:none;background:none;padding:none"><i class="fa fa-fw fa-search" style="border-radius:3px;color:#FFE5E6"></i></button>
+        <button type="submit" name=button value="timeline" style="border:none;background:none;padding:none">See Timeline</button>
+      </form>
+      <a style="float:right" href="{{ logout_url }}"><i class="fa fa-sign-out"></i>Logout</a>
+  </div>
+<!-- w3-content defines a container for fixed size centered content,
+and is wrapped around the whole page content, except for the footer in this example -->
+<div class="w3-content" style="max-width:1400px">
+
+<!-- Grid -->
+<div class="w3-row">
+
+<!-- Blog entries -->
+<div class="w3-col l8 s12" style ="width:70%">
+  <!-- Blog entry -->
+  <form action = "/profile"  enctype="multipart/form-data" method ="post">
+  <div class="w3-card-4 w3-margin w3-white" style="border-radius:15px">
+    <!-- <img src="/w3images/woods.jpg" alt="Nature" style="width:100%"> -->
+    <div class="w3-container" >
+      <input  type="text" placeholder="What's happening?" name="tweetContent" maxlength="280"
+      style="width:80%; height:25%; margin:10px; padding:15px; border-radius:25px; border-color:#FF8C00">
+      <label for="file-upload" class="custom-file-upload">
+      <i class="fas fa-camera-retro" style="font-size:24px;color:#FFBA66"></i>
+      </label>
+      <input id="file-upload" type="file" name = "file" multiple ="multiple"/>
+      <button type="submit" class="registerbtn"  name ="button" value ="tweet" style="width:10%;height:5%;background-color:#FF8C00;padding:5px;border-radius:15px"/>Tweet</button><br>
+
+    </div>
+  </div>
+  </form>
+    <div class="w3-container">
+    {% if twt %}
+    <h3><b>Tweets</b></h3>
+    {% else %}
+    <h3><b>No tweets yet.!!!</b></h3>
+    {% endif %}
+    </div>
+    {% for t in twt %}
+  <div class="w3-card-4 w3-margin w3-white" style="border-radius:15px">
+    <div class="w3-container">
+
+      <h5><span class="w3-opacity">{{ t.date}} &nbsp;&nbsp;&nbsp;
+
+     </span></h5>
+
+    </div>
+
+    <div class="w3-container">
+      <p>{{ t.tweetContent }}</p>
+      {% if t.image_file %}
+    <img src="data:image/jpeg;base64,{{t.image}}" style ="width:70% ;height:40%;padding:15px"></img>
+      {% endif %}
+    </div>
+    <form action="/profile" method="post">
+   &nbsp;&nbsp;&nbsp;
+   <button type="submit" name="button" value="delete" style="border:none;background:none;padding:0;"><i class="material-icons" style="font-size:24px;color:#FF3333;margin:3px">delete_forever</i></button>
+    <button type="button" onclick="showTweet()" name="button" value="postEdit" style="border:none;background:none;padding:0"><i class="fa fa-edit" style="font-size:24px;color:#FF3333;margin:3px"></i></button>
+    <input type="hidden" name="tweetContent" value="{{ t.tweetContent }}"/>
+    <input type="hidden" name="image_file" value="{{ t.image_file }}"/>
+    <div id="editTweet" style="display:none">
+      <input type="text" style="width:50%" name="editedPost" value="{{ t.tweetContent }}"/>
+      <button type="submit" name="button" value="update" onclick="showTweet()" style="width:10%;height:5%;background-color:#FF8C00;padding:5px;border-radius:15px">Save</button>
+    </div>
+  </form>
+      </div>
+  {% endfor %}
+  <hr>
+
+</div>
+
+<!-- Introduction menu -->
+<div class="w3-col l4" style ="width:30%;float:right">
+  <!-- About Card -->
+  <div class="w3-card w3-margin w3-margin-top">
+    {% if myuser.profile_picture %}
+  <img src= "data:image/jpeg;base64,{{myuser.profile_picture}}" height="400" style="width:100%" alt="{{ myuser.picture_file }}">
+    {% else %}
+    <img src= "/static/images/profile.png" style="width:100%; height:50%" alt="twitter">
+    {% endif %}
+    <div class="w3-container w3-white">
+      <form action ="/profile" method="post" enctype="multipart/form-data">
+
+        <label for="picture-upload" class="custom-file-upload">
+        <i class="fas fa-camera-retro" style="font-size:24px;color:#FF3333"></i>
+        </label>
+        <input id = "picture-upload" type="file" name = "pictureName" multiple ="multiple"/>
+      <button type ="submit" name ="button" value="change"style="width:25%;padding:5px;float:right;border-radius:15px;margin:3px;background-color:#FF3333">Save</button>
+      </form>
+
+      {% for user in userDetails %}
+      <h4><b>{{user.fname}}  {{user.lname}}
+        <button onclick="document.getElementById('id01').style.display='block'"
+          style="width:auto;font-size:12px;padding:5px;border-radius:15px;margin:8px;border:1px solid #FF8C00; background:none; color:black">Edit Profile</button></b></h4>
+      <p>{{user.aboutMe}}</p>
+      {% endfor %}
+    </div>
+  </div><hr>
+
+  <!-- Posts -->
+  <div class="w3-card w3-margin">
+    <div class="w3-container w3-padding">
+      <h4>Following({{countFollowing}}) </h4>
+    </div>
+    <ul class="w3-ul w3-hoverable w3-white">
+      <li class="w3-padding-16">
+        {% for follwng in listFollow %}
+        {% if follwng.following %}
+        <span class="w3-large">{{follwng.following}}</span><br>
+
+        {% endif %}
+        {% endfor %}
+      </li>
+    </ul>
+  </div>
+  <div class="w3-card w3-margin">
+    <div class="w3-container w3-padding">
+      <h4>Followers({{countFollower}})</h4>
+    </div>
+    <ul class="w3-ul w3-hoverable w3-white">
+      <li class="w3-padding-16">
+        {% for follower in listFollow %}
+        {% if follower.followers %}
+          <span class="w3-large">{{follower.followers}}</span><br>
+        {% endif %}
+        {% endfor %}
+      </li>
+    </ul>
+  </div>
+  <hr>
+
+</div>
+
+<!-- END GRID -->
+</div><br>
+
+<!-- END w3-content -->
+</div>
+
+
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form class="modal-content" action="/profile" method="post">
+    <div class="container">
+      <h1>Edit Profile</h1>
+      <hr>
+    <h4>  <label for="username">Username</label><br>
+      <input type = "text" name = "username" value = "{{ myuser.username }}" disabled/><br> </h4>
+
+      <label for="fname"><b>First Name</b></label>
+      <input type="text" name="fname" value = "{{ myuser.fname }}" required >
+
+      <label for="lname"><b>Last Name</b></label>
+      <input type="text" name="lname" value = "{{ myuser.lname }}" required>
+
+      <label for="email"><b>Email</b></label>
+      <input type="text" name="email" value = "{{ myuser.email }}" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" value = "{{ myuser.password }}" name="psw" >
+
+      <label for="birthday"><b>Birthday</b></label>
+      <input type="date" value = "{{ myuser.birthday }}" name="birthday" > <br>
+
+      {% if myuser.aboutMe %}
+      <label for="aboutMe"><b>Bio</b></label>
+      <input type = "text" name="aboutMe"  placeholder="{{ myuser.aboutMe }}" value="{{ myuser.aboutMe }}" maxlength="280"/>
+
+      {% else %}
+      <label for="aboutMe"><b>Bio</b></label>
+      <input type = "text" name="aboutMe" placeholder="Your bio (280 chars max)" maxlength="280" />
+      {% endif %}
+
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="submit" class="cancelbtn" name ="button" value="Edit" style="background-color:#4CAF50;">Edit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+function showTweet(){
+  console.log("Tweet called")
+  var id=document.getElementById('editTweet');
+  console.log("Id is "+id.style.display)
+  if(id.style.display==='none'){
+      id.style.display="block";
+  }
+  else {
+    id.style.display = "none";
+  }
+}
+</script>
+<!-- Footer -->
+
+<!-- Footer -->
+<!-- <footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
+  <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Previous</button>
+  <button class="w3-button w3-black w3-padding-large w3-margin-bottom">Next ยป</button>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer> -->
+
+</body>
+</html>

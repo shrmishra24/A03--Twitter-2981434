@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" crossorigin="anonymous">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+/* style the container */
+.container {
+  position: relative;
+  border-width:5px;
+  border-style:outset;
+  border-color: #FF7066;
+  background-color: white;
+  padding: 20px 0 30px 0;
+}
+
+/* style inputs and link buttons */
+input,
+.btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 2px;
+  border: none;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none; /* remove underline from anchors */
+}
+
+input:hover,
+.btn:hover {
+  opacity: 1;
+}
+
+/* style the submit button */
+input[type=submit] {
+  background-color: #ff6666;;
+  border-radius: 25px;
+  width: 250px;
+  color: white;
+  cursor: pointer;
+}
+
+
+input[type=submit]:hover {
+  background-color: #ff6666;
+}
+
+/* Two-column layout */
+.col {
+  float: left;
+  width: 50%;
+  margin: auto;
+  padding: 0 50px;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* vertical line */
+.vl {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  border: 2px solid #ddd;
+  height: 175px;
+}
+
+/* text inside the vertical line */
+.vl-innertext {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  padding: 8px 10px;
+}
+
+/* hide some text on medium and large screens */
+.hide-md-lg {
+  display: none;
+}
+
+/* bottom container */
+.bottom-container {
+  text-align: center;
+  background-color: #666;
+  border-radius: 0px 0px 4px 4px;
+}
+
+/* Responsive layout - when the screen is less than 650px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 650px) {
+  .col {
+    width: 100%;
+    margin-top: 0;
+  }
+  /* hide the vertical line */
+  .vl {
+    display: none;
+  }
+  /* show the hidden text on small screens */
+  .hide-md-lg {
+    display: block;
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2 style = "font-family:georgia,garamond,serif;font-size:26px;font-style:italic;color: #003333;text-align:center">
+Welcome to Twitter.!!!</h2>
+<p style = "font-family:georgia,garamond,serif;font-size:16px;font-style:italic;text-align:center">See what's happening in the world right now</p>
+
+<div class="container">
+  <form action="/" method = "post" >
+    <div class="row">
+      <h2 style="text-align:center;font-family:cursive;">Join Twitter today.</h2>
+      <div class="col"><br>
+          <i class="fa fa-search"></i><strong style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;text-align:center"> Follow your interests.</strong><br><br>
+          <i class="far fa-comment-dots"></i><strong style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;text-align:center"> Join the conversation.</strong><br><br>
+          <i class ="fas fa-users"  ></i><strong style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;text-align:center"> Hear what people are talking about.</strong><br><br>
+      </div>
+
+      <div  class="col">
+        <br><br>
+      <a href ="{{ login_url }}" style="  background-color: #ff6666;border-radius: 25px;color: white;
+        cursor: pointer;padding : 14px 50px;text-align: center;text-decoration: none;">Login</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </form>
+  <!-- <script>
+  function checkPassword(){
+    console.log("password check called")
+    var pwd=document.getElementById('chkPwd').value;
+    var password_entered =  "{{password_chk}}";
+    console.log("password_entered " + password_entered)
+    if(pwd === ''){
+         alert ("Please enter Password");
+    }
+    else if(pwd === password_entered) {
+      alert ("Username and Password did not match: Please try again...");
+    }
+  }
+  </script> -->
+</div>
+</body>
+</html>
